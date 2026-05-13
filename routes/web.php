@@ -2,6 +2,11 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\CategoryController; 
+use App\Http\Controllers\ProductController;
+use App\Models\Brand;
+use App\Models\Category; 
+use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -11,7 +16,12 @@ Route::get('/', function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        $totalProduk = Product::count();
+        $totalBrand = Brand::count();
+        $totalKategori = Category::count();
+        $stokMenipis = Product::where('stok', '<', 5)->count();
+
+        return view('dashboard', compact('totalProduk', 'totalBrand', 'totalKategori', 'stokMenipis'));
     })->name('dashboard');
 
     Route::resource('brands', BrandController::class);
