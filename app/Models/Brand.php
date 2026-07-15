@@ -9,7 +9,7 @@ class Brand extends Model
 {
     use HasFactory;
 
-    // 1. Kolom yang boleh diisi (sesuai tabel brands kamu)
+    // 1. Kolom yang boleh diisi 
     protected $fillable = [
         'nama_brand', 
         'slug', 
@@ -17,7 +17,7 @@ class Brand extends Model
     ];
 
     // 2. Hubungan: Satu Brand punya banyak Produk (HasMany)
-    // Sama seperti contoh Category -> Articles di materimu
+    // Sama seperti contoh Category 
     public function products()
     {
         return $this->hasMany(Product::class);

@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header_scripts">
-        </x-slot>
+    </x-slot>
 
     <div class="py-12">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
@@ -13,7 +13,9 @@
 
                 <form action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    @method('PUT') <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+                    @method('PUT') 
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
                         <div>
                             <label for="nama_produk" class="block text-sm font-medium text-gray-700 mb-2">Nama Produk / Seri</label>
                             <input type="text" name="nama_produk" id="nama_produk" value="{{ old('nama_produk', $product->nama_produk) }}" 
@@ -88,17 +90,29 @@
                     </div>
 
                     <div class="mb-4 bg-gray-50 p-4 rounded-md border border-gray-200">
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Foto Saat Ini</label>
-                        @if($product->gambar && file_exists(public_path('uploads/products/' . $product->gambar)))
-                            <img src="{{ asset('uploads/products/' . $product->gambar) }}" alt="Sneakers Lama" class="w-32 h-32 object-cover rounded shadow-sm mb-4">
-                        @else
-                            <p class="text-sm text-gray-400 mb-4">Tidak ada foto.</p>
-                        @endif
-
-                        <label for="gambar" class="block text-sm font-medium text-gray-700 mb-2">Pilih Foto Baru (Kosongkan jika tidak ingin mengubah foto)</label>
-                        <input type="file" name="gambar" id="gambar" accept="image/*"
-                            class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 file:cursor-pointer hover:file:bg-blue-100">
-                        @error('gambar') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-6 mb-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Foto Saat Ini</label>
+                                @if($product->gambar && file_exists(public_path('uploads/products/' . $product->gambar)))
+                                    <div class="w-40 h-40 border border-gray-300 bg-white rounded-lg p-1 overflow-hidden shadow-sm flex items-center justify-center">
+                                        <img src="{{ asset('uploads/products/' . $product->gambar) }}" alt="Sneakers Lama" class="w-full h-full object-contain rounded">
+                                    </div>
+                                @else
+                                    <div class="w-40 h-40 border border-dashed border-gray-300 bg-white rounded-lg flex flex-col items-center justify-center text-gray-400">
+                                        <span class="text-3xl">👟</span>
+                                        <p class="text-xs mt-1">Tidak ada foto</p>
+                                    </div>
+                                @endif
+                            </div>
+                            
+                            <div class="flex-1">
+                                <label for="gambar" class="block text-sm font-medium text-gray-700 mb-2">Pilih Foto Baru</label>
+                                <p class="text-xs text-gray-400 mb-3">*Kosongkan jika tidak ingin mengubah foto</p>
+                                <input type="file" name="gambar" id="gambar" accept="image/*"
+                                    class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 file:cursor-pointer hover:file:bg-blue-100">
+                                @error('gambar') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                            </div>
+                        </div>
                     </div>
 
                     <div class="mb-6 flex items-center">
@@ -121,5 +135,5 @@
     </div>
 
     <x-slot name="footer_scripts">
-        </x-slot>
+    </x-slot>
 </x-app-layout>
